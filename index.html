@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HumJaisa AI</title>
+  <style>
+    body { font-family: Arial; background: #121212; color: white; text-align: center; padding: 40px; }
+    #chatBox { width: 80%; max-width: 600px; margin: auto; border: 1px solid #555; padding: 20px; border-radius: 10px; }
+    input, button { padding: 10px; margin-top: 10px; font-size: 16px; width: 80%; border-radius: 5px; }
+    #response { margin-top: 20px; color: lightgreen; }
+  </style>
+</head>
+<body>
+
+  <h1>🤖 HumJaisa AI</h1>
+  <div id="chatBox">
+    <input type="text" id="userInput" placeholder="Apna sawal likho...">
+    <br>
+    <button onclick="askAI()">Send</button>
+    <div id="response"></div>
+  </div>
+
+  <script>
+    async function askAI() {
+      const userMessage = document.getElementById('userInput').value;
+      const resDiv = document.getElementById('response');
+      resDiv.innerHTML = "Thinking...";
+
+      const response = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage })
+      });
+
+      const data = await response.json();
+      resDiv.innerHTML = "<b>HumJaisa:</b> " + data.reply;
+    }
+  </script>
+
+</body>
+</html>
